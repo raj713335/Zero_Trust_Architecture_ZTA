@@ -31,3 +31,41 @@ For easy installation and setup run a single command below.
 ```
 
 ----------
+
+## 2. Keycloak for SSO
+
+Keycloak is an open-source identity and access management (IAM) solution designed to help developers and administrators manage authentication, authorization, and user identities across applications. It simplifies and secures access to applications and services by centralizing user authentication and integrating with multiple authentication providers. Keycloak is widely used in enterprise environments for implementing single sign-on (SSO), multi-factor authentication (MFA), and other security protocols across various applications.
+
+Key Features of Keycloak
+
+- Single Sign-On (SSO): Users can log in once and access multiple applications without having to authenticate again, enhancing user convenience and security.
+
+- Multi-Factor Authentication (MFA): Keycloak supports various MFA methods, such as one-time passwords (OTP) via mobile apps or email, SMS, and other custom mechanisms to improve account security.
+
+
+<p align="center">
+  <img src="data/Keycloak/1.png" width="400" />
+  <img src="data/Keycloak/2.png" width="400" />
+  <img src="data/Keycloak/3.png" width="400" />
+  <img src="data/Keycloak/4.png" width="400" />
+</p> 
+
+## 3. Real-time  API monitoring </h3>
+
+- Kong API Gateway
+- Zipkin 
+- Prometheus
+- Grafana
+- Logstash
+- Elasticsearch
+- Kibana
+
+<p align="center">
+  <img src="data/API_Management/1.png" width="400" />
+  <img src="data/API_Management/2.png" width="400" />
+  <img src="data/API_Management/3.png" width="400" />
+  <img src="data/API_Management/4.png" width="400" />
+  <img src="data/API_Management/5.png" width="400" />
+  <img src="data/API_Management/6.png" width="400" />
+</p> 
+
