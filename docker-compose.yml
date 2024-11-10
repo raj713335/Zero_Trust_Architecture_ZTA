@@ -28,7 +28,7 @@ networks:
 
 services:
   kong-migrations:
-    image: kong:latest
+    image: kong:3.7.1
     command: kong migrations bootstrap
     environment:
       <<: *kong-env
@@ -39,7 +39,7 @@ services:
       - kong-database
 
   kong-migrations-up:
-    image: kong:latest
+    image: kong:3.7.1
     command: kong migrations up && kong migrations finish
     environment:
       <<: *kong-env
@@ -50,7 +50,7 @@ services:
       - kong-database
 
   kong:
-    image: kong:latest
+    image: kong:3.7.1
     user: "${KONG_USER:-kong}"
     environment:
       <<: *kong-env
@@ -83,6 +83,7 @@ services:
     security_opt:
       - no-new-privileges
 
+
   kong-database:
     image: postgres:16-alpine
     environment:
@@ -110,6 +111,34 @@ services:
     volumes:
       - kong_data:/var/lib/postgresql/data
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: kong-database
+      DB_DATABASE: kong
+      DB_USER: kong
+      DB_PASSWORD: mykongpassword
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_HOSTNAME: "localhost"  # Set to localhost or your specific hostname
+      KEYCLOAK_HTTP_ENABLED: "true"  # Enable HTTP mode
+      KEYCLOAK_HTTPS_ENABLED: "false"  # Disable HTTPS
+      KEYCLOAK_SSL_REQUIRED: "none"  # Disable SSL enforcement
+      KEYCLOAK_FRONTEND_URL: "http://localhost:8080"  # Set to HTTP
+      KEYCLOAK_HTTP_COOKIE_SAME_SITE: "None"
+      KEYCLOAK_HTTP_COOKIE_SECURE: "false"  # Disable secure cookies for HTTP
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin  # Set new environment variables for admin username
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin  # Set
+    command: ["start-dev"]
+    ports:
+      - "8080:8080"
+    depends_on:
+      - kong-database
+    networks:
+      - kong-net
+
   zipkin:
     image: openzipkin/zipkin:latest
     container_name: zipkin
@@ -119,7 +148,7 @@ services:
       - kong-net
 
   elasticsearch:
-    image: elasticsearch:latest
+    image: elasticsearch:8.11.3
     container_name: elasticsearch
     restart: unless-stopped
     ports:
@@ -133,7 +162,7 @@ services:
         ipv4_address: 172.1.1.21
 
   kibana:
-    image: kibana:latest
+    image: kibana:8.11.3
     container_name: kibana
     restart: unless-stopped
     ports:
@@ -143,7 +172,7 @@ services:
         ipv4_address: 172.1.1.22
 
   logstash:
-    image: logstash:latest
+    image: logstash:8.11.3
     container_name: logstash
     restart: unless-stopped
     ports:
@@ -174,5 +203,3 @@ services:
       - "3000:3000"
     networks:
       - kong-net
-
-
