@@ -63,6 +63,7 @@ services:
       KONG_PROXY_ERROR_LOG: /dev/stderr
       KONG_PREFIX: ${KONG_PREFIX:-/var/run/kong}
       KONG_TRACING_INSTRUMENTATIONS: "request"
+      KONG_PROMETHEUS_ENABLED: "on"
     networks:
       - kong-net
     ports:
